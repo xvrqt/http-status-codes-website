@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <!-- Title and Description -->
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}" />
+    <title>{ title }</title>
+    <meta name="description" content="{ description }" />
     <meta name="author" content="crow" />
 
     <!-- Meta -->
@@ -39,25 +39,25 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Our single style sheet -->
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles/error.css" />
   </head>
 
   <body>
     <div id="grid"></div>
     <div id="lines"></div>
     <h1>
-      <span>{{ error-code }}</span>
-      <span>{{ error-code }}</span>
+      <span>{ status_code }</span>
+      <span>{ status_code }</span>
     </h1>
-    <h2><span id="error-reason">{{ error-reason }}</span></h2>
+    <h2><span id="error-reason">{ status_reason }</span></h2>
     <div id="description">
       <p>
-        {{ error-description }}
+        { status_description }
       </p>
     </div>
     <div id="links">
       <div id="spec" class="link">
-        <a href="{{ error-spec-link }}">
+        <a href="{ status_spec_link }">
         <button class="glowing-btn">
           <span class="glowing-txt"
             >s<span class="faulty-letter">p</span>ec</span

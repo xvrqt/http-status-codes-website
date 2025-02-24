@@ -37,7 +37,7 @@
                   echo "Server already running."
                 else
                   # Start the server, set a trap to kill it on exit
-                  miniserve -p 1234 -d monokai web/ > logs/server.log 2>&1 &
+                  miniserve -p 1234 -d monokai static-site-generator/result/ > logs/server.log 2>&1 &
                   WEB_PID=$!
                   trap "kill -9 $WEB_PID" EXIT
                   echo "Server is running at: localhost:1234"
