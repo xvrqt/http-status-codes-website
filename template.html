@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Title and Description -->
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}" />
+    <meta name="author" content="crow" />
+
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#111" />
+
+    <!-- Icons -->
+    <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="/icons/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Our single style sheet -->
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <div id="grid"></div>
+    <div id="lines"></div>
+    <h1>
+      <span>{{ error-code }}</span>
+      <span>{{ error-code }}</span>
+    </h1>
+    <h2><span id="error-reason">{{ error-reason }}</span></h2>
+    <div id="description">
+      <p>
+        {{ error-description }}
+      </p>
+    </div>
+    <div id="links">
+      <div id="spec" class="link">
+        <a href="{{ error-spec-link }}">
+        <button class="glowing-btn">
+          <span class="glowing-txt"
+            >s<span class="faulty-letter">p</span>ec</span
+          >
+        </button>
+        </a>
+      </div>
+      <div id="source" class="link">
+        <a href="xvrqt.com">
+          <button
+            class="glowing-btn"
+            style="
+              animation-delay: 1.15s;
+              animation-direction: reverse;
+              animation-duration: 4.2s;
+            "
+          >
+            <span
+              class="glowing-txt"
+              style="animation-delay: 0.45s; animation-duration: 4s"
+              >sour<span
+                class="faulty-letter"
+                style="animation-delay: 0.05s; animation-duration: 5.5s"
+                >c</span
+              >e</span
+            >
+          </button>
+        </a>
+      </div>
+      <div id="support" class="link">
+        <a href="https://kofi.xvrqt.com">
+          <button
+            class="glowing-btn"
+            style="animation-delay: 0.25s; animation-duration: 3.5s"
+          >
+            <span
+              class="glowing-txt"
+              style="animation-delay: 0.35s; animation-direction: reverse"
+              >s<span class="faulty-letter" style="animation-delay: 0.65"
+                >up</span
+              >port</span
+            >
+          </button>
+        </a>
+      </div>
+  </body>
+</html>

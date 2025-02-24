@@ -1,0 +1,604 @@
+/* Vars */
+:root {
+  --blue: hsl(160, 100%, 65%);
+  --pink: hsl(310, 100%, 65%);
+}
+
+/* Helper class to easily apply a simple fade in animation */
+.fade-in {
+  animation: 0.5s linear 1s both fade-in;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*********/
+/* FONTS */
+/*********/
+
+/* Load Custom Font Faces */
+/* The Blocky Error Codes - e.g. 404 */
+@font-face {
+  font-family: "error-code";
+  font-weight: 900;
+  src: url(/fonts/code.ttf);
+}
+
+/* The sub-code script with its title */
+/* e.g. "Not Found" */
+@font-face {
+  font-family: "error-script";
+  src: url(/fonts/script.ttf);
+}
+
+/* Used for the error description, and links */
+@font-face {
+  font-family: "info";
+  src: url(/fonts/info.woff2);
+}
+
+/* Take up the entire screen for proper rendering */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+/* Central column, where the error code and explanation will float */
+/* Subtle purlple burst o a dark gradient */
+/* Center the Error Code */
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: radial-gradient(rgba(118, 0, 191, 0.5) 0%, transparent 70%),
+    linear-gradient(#0b161e 40%, #202076 70%);
+
+  perspective: 700px;
+  font-size: clamp(10px, 2vw, 20px);
+}
+
+/* The grid pattern in the background */
+#grid {
+  /* Scroll into infinity on a loop */
+  animation: 4s linear infinite both grid-scan;
+
+  /* Create a neon bordered square, which will be repeated */
+  background: linear-gradient(
+      transparent 65%,
+      rgba(46, 38, 255, 0.4) 75%,
+      rgb(125, 65, 230) 80%,
+      rgba(46, 38, 255, 0.4) 85%,
+      transparent 95%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 65%,
+      rgba(46, 38, 255, 0.4) 75%,
+      rgb(125, 65, 230) 80%,
+      rgba(46, 38, 255, 0.4) 85%,
+      transparent 95%
+    );
+  background-size: 30px 30px;
+
+  /* Larger than the screen, because we're going to 3D transform it */
+  width: 200vw;
+  height: 300vh;
+  bottom: -120vh;
+  position: absolute;
+  transform: rotateX(-100deg);
+
+  /* Mask the image so it appears to fade into the distance */
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 80%);
+}
+/* Animage the grid so it appears to scroll infinitely */
+@keyframes grid-scan {
+  from {
+    /* Rotate it so that it appears to be going towards the 'horizon' */
+    transform: rotateX(-100deg) translateY(0px);
+  }
+  to {
+    transform: rotateX(-100deg) translateY(30px);
+  }
+}
+
+/* The lines which intersect the error code, in the background */
+#lines {
+  /* All the way across the screen, lined up to intersect the error code vertically */
+  left: 0;
+  top: 4em;
+  width: 100vw;
+  height: 4em;
+  position: fixed;
+
+  background: linear-gradient(
+    rgba(89, 193, 254, 0.2) 20%,
+    rgb(89, 193, 254) 40%,
+    rgb(89, 193, 254) 60%,
+    rgba(89, 193, 254, 0.2) 80%
+  );
+  background-size: 1px 0.5em;
+  box-shadow: 0 0 1em rgba(89, 193, 254, 0.4);
+
+  animation: 0.25s linear 0.35s line-slide-in;
+}
+
+/* Slides the lines in from the left, with an angle at the leading edge */
+@keyframes line-slide-in {
+  0% {
+    transform: translateX(-110vw) skew(-15deg);
+  }
+  100% {
+    transform: translateX(0px) skew(0deg);
+  }
+}
+
+/* The giant blocky error code */
+h1 {
+  font-size: 9em;
+  font-family: "error-code";
+  letter-spacing: 0.03em;
+
+  margin: 0;
+  position: relative;
+  transform: skew(-15deg);
+  animation: error-code-slide 0.75s;
+}
+
+/* Shadow */
+h1 span:first-child {
+  display: block;
+  text-shadow:
+    0 0 0.1em #8ba2d0,
+    0 0 0.2em rgb(0, 0, 0),
+    0 0 5em #165ff3;
+  /* Semi-transparent outline */
+  -webkit-text-stroke: 0.06em rgba(0, 0, 0, 0.5);
+}
+/* Chrome fill */
+h1 span:last-child {
+  top: 0;
+  left: 0;
+  position: absolute;
+
+  background-image: linear-gradient(
+    #032d50 25%,
+    #00a1ef 35%,
+    #ffffff 50%,
+    #20125f 50%,
+    #8313e7 55%,
+    #ff61af 75%
+  );
+
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.01em #94a0b9;
+}
+/* Slides in from the right, over shoots, and bounces back into the center */
+@keyframes error-code-slide {
+  0% {
+    transform: translateX(200vw) skew(0deg);
+  }
+  75% {
+    transform: translateX(-10vw) skew(20deg);
+  }
+  100% {
+    transform: translateX(0px) skew(-15deg);
+  }
+}
+
+/* The specular highlight on the error code */
+h1::after {
+  content: "";
+  top: -1.28em;
+  right: 0.025em;
+  width: 0.4em;
+  height: 0.4em;
+  float: right;
+  position: relative;
+  animation: 1.5s ease-in-out 0.75s both specular-shine;
+
+  background:
+    radial-gradient(
+      rgb(255, 255, 255) 3%,
+      rgba(255, 255, 255, 0.3) 15%,
+      rgba(255, 255, 255, 0.05) 60%,
+      transparent 80%
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.2) 50%, transparent 60%) 50% 50% / 5%
+      100%,
+    radial-gradient(rgba(255, 255, 255, 0.2) 50%, transparent 60%) 50% 50% / 70%
+      5%;
+  background-repeat: no-repeat;
+}
+
+/* Fades in at a large scale, to a fully opaque point, spins, then spins again a bit later */
+@keyframes specular-shine {
+  0% {
+    opacity: 0;
+    transform: scale(5, 5);
+  }
+  7% {
+    opacity: 1;
+  }
+  25% {
+    transform: rotateZ(180deg);
+  }
+  75% {
+    transform: rotateZ(180deg);
+  }
+  100% {
+    transform: rotateZ(360deg) scale(1, 1);
+  }
+}
+
+/* The error code reason phrase container - tilts the words */
+h2 {
+  /* Apply a stylish tilt to the words */
+  margin: 0;
+  margin-top: -2.66em;
+  transform: rotate(-7deg);
+
+  color: white;
+  font-size: 3.5em;
+  font-family: "error-script";
+
+  /* Fades in after a second */
+  animation: 0.5s linear 1s both fade-in;
+}
+/* The words themselves - pulsate with a subtle neon glow */
+#error-reason {
+  animation: 0.5s ease-in-out infinite both alternate error-reason;
+
+  text-shadow:
+    0 0 0.05em #fff,
+    0 0 0.2em #fe05e1,
+    0 0 0.3em #fe05e1;
+}
+/* Alternate between 'glowing' at slightly larger/smaller radius */
+@keyframes error-reason {
+  0% {
+    text-shadow:
+      0 0 0.05em #fff,
+      0 0 0.2em #fe05e1,
+      0 0 0.3em #fe05e1;
+  }
+  100% {
+    text-shadow:
+      0 0 0.04em #fff,
+      0 0 0.15em #fe05e1,
+      0 0 0.25em #fe05e1;
+  }
+}
+
+/* RFC Description */
+/* Gradient borders match the text, background is slightly dimmer */
+#description {
+  width: min(90vw, 335px);
+  padding: 0 1rem 0.5rem 1rem;
+  margin-top: 1rem;
+
+  /* Fade in after the error reason */
+  animation: 0.25s linear 1.1s both fade-in;
+
+  /* Matching left/right border gradients for the text */
+  border-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(160, 100%, 65%) 25%,
+      hsl(310, 100%, 65%) 75%,
+      transparent 100%
+    )
+    10 100%;
+
+  /* Make the background slightly dimmer to make the text easier to read */
+  background-image: linear-gradient(
+    180deg,
+    rgba(16, 16, 16, 0),
+    rgba(16, 16, 16, 0) 10%,
+    rgba(16, 16, 16, 0.2) 90%,
+    rgba(16, 16, 16, 0)
+  );
+}
+
+#description p {
+  font-size: 0.8rem;
+  font-family: info;
+  text-align: justify;
+
+  /* Blue to pink text */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    355deg,
+    hsl(310, 100%, 65%),
+    hsl(160, 100%, 65%)
+  );
+  /* Fade in just after the background container does */
+  animation: 0.25s linear 1.15s both fade-in;
+}
+
+/* Container for the link buttons at the bottom */
+#links {
+  width: min(90vw, 335px);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  font-size: 0.8rem;
+  font-family: info;
+  text-align: center;
+}
+
+/* Individual buttons fade-in */
+.link {
+  animation: 0.5s linear 0s both fade-in;
+}
+
+/* Fade in at different times, one after another */
+#spec {
+  animation-delay: 1.25s;
+}
+#source {
+  animation-delay: 1.35s;
+}
+#support {
+  animation-delay: 1.45s;
+}
+
+/* Style the actual buttons themselves */
+.glowing-btn {
+  cursor: pointer;
+
+  color: rgba(0, 0, 0, 0.8);
+  font-family: error-code;
+  font-size: 0.8em;
+  font-weight: 900;
+  text-shadow: none;
+  letter-spacing: 0.5em;
+
+  position: relative;
+  padding: 0.35em 1em;
+  border: 0.15em solid var(--blue);
+  border-radius: 0.45em;
+  background: var(--blue);
+  perspective: 2em;
+  animation: none;
+}
+
+/* Add a glow infront of it, on the same plane as the grid - giving the illusion it is emissive */
+.glowing-btn::before {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+
+  opacity: 0.7;
+  transition: opacity 100ms linear;
+
+  filter: blur(1.5em);
+  transform: translateY(120%) rotateX(85deg) scale(1.5, 0.75);
+  background: var(--blue);
+
+  pointer-events: none;
+}
+
+/* Surround the button with a glow which gives the illusion it is emissive */
+.glowing-btn::after {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1;
+  z-index: -1;
+  position: absolute;
+
+  box-shadow: 0 0 2em 0.2em var(--blue);
+  background-color: var(--blue);
+  transition: opacity 100ms linear;
+}
+/* On hover, dim the 'emissiveness' of the glow */
+.glowing-btn:hover::after {
+  opacity: 0;
+}
+.glowing-btn:hover::before {
+  opacity: 0.5;
+}
+
+/* Remove the background, change the text from black to blue, cause the border to flicker */
+.glowing-btn:hover {
+  cursor: pointer;
+
+  position: relative;
+  padding: 0.35em 1em;
+  border: 0.15em solid var(--blue);
+  border-radius: 0.45em;
+  background: none;
+
+  color: var(--blue);
+  font-family: error-code;
+  font-size: 0.8em;
+  font-weight: 900;
+  letter-spacing: 0.5em;
+
+  perspective: 2em;
+
+  -webkit-box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  -moz-box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  animation: border-flicker 4s linear infinite;
+}
+@keyframes border-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  1% {
+    opacity: 1;
+  }
+  2% {
+    opacity: 0.1;
+  }
+
+  4% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* The text inside the button */
+/* Adjust the margin to center it better */
+.glowing-txt {
+  animation: none;
+  margin-right: -0.5em;
+}
+/* On hover, cause the text to glow and flicker */
+.glowing-btn:hover .glowing-txt {
+  -webkit-text-shadow:
+    0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em inherit;
+  -moz-text-shadow:
+    0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em var(--blue);
+  text-shadow:
+    0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em inherit;
+  animation: text-flicker 6s linear infinite;
+}
+@keyframes text-flicker {
+  0% {
+    opacity: 0.1;
+  }
+
+  1% {
+    opacity: 1;
+  }
+
+  4% {
+    opacity: 0.1;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  6% {
+    opacity: 0.1;
+  }
+  10% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.3;
+  }
+  15% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0.7;
+  }
+  36% {
+    opacity: 0.2;
+  }
+
+  38% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+/* Some of the letters in the glowing-text are marked 'faulty' and appear dimmer and flicker more aggressively than the other letters */
+.faulty-letter {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+/* Dim and add the faulty flicker animation */
+.glowing-btn:hover .faulty-letter {
+  opacity: 0.5;
+  animation: faulty-flicker 2s linear infinite;
+}
+
+@keyframes faulty-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 0.1;
+  }
+  4% {
+    opacity: 0.5;
+  }
+  19% {
+    opacity: 0.5;
+  }
+  21% {
+    opacity: 0.1;
+  }
+  23% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  83% {
+    opacity: 0.4;
+  }
+
+  87% {
+    opacity: 1;
+  }
+}
+/* Tiny Screen Adjustments */
+@media only screen and (max-width: 600px) {
+  /* Make the links stack vertically instead of horizontally */
+  #links {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .link {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .glowing-btn {
+    width: 100%;
+    font-size: 1em;
+    letter-spacing: 0.5em;
+  }
+
+  #links .link:not(:last-child) .glowing-btn::before {
+    display: none;
+  }
+}
