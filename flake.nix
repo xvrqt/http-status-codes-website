@@ -2,16 +2,18 @@
   description = "Website for generating and learning about HTTP error codes.";
 
   inputs = {
+    rust.url = "git+https://git.irlqt.net/crow/rust-flake.git";
     utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { utils, nixpkgs, ... }:
+  outputs = { rust, utils, nixpkgs, ... }:
     utils.lib.eachDefaultSystem
       (system:
         let
+          overlays = [ rust.overlays.oxalica rust.overlays.default ];
           pkgs = import nixpkgs {
-            inherit system;
+            inherit system overlays;
           };
         in
         {
@@ -23,6 +25,8 @@
               buildInputs = [
                 # To easily serve and test the static webpages
                 pkgs.miniserve
+                # To build and run the template engine that regenerates the website
+                pkgs.rust-toolchain
               ];
 
               shellHook = ''

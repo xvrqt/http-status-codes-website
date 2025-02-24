@@ -1,2 +1,5 @@
 # Don't Store the dev logs in the repo
-logs
+logs/
+
+# Don't store Cargo build outputs 
+static-site-generator/target/
