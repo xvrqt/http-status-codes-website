@@ -159,6 +159,7 @@
 
                   extraConfig = ''
                     error_page 404 /404.html;
+                    error_page 403 /403.html;
                   '';
 
                   locations = {
@@ -171,6 +172,13 @@
                     "/404" = {
                       root = "${root}";
                       return = "404";
+                    };
+                    "/403.html" = {
+                      root = "${root}";
+                    };
+                    "/403" = {
+                      root = "${root}";
+                      return = "403";
                     };
                   };
                 };
