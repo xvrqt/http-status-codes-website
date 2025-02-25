@@ -166,6 +166,7 @@
                       root = "${root}";
                     };
                     "/404" = {
+                      root = "${root}";
                       return = "404 /404.html";
                     };
                   };
