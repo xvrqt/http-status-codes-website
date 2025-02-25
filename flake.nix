@@ -9,6 +9,7 @@
 
   outputs = { rust, utils, nixpkgs, ... }:
     let
+      pkgName = "http-status-codes";
       wrapped = utils.lib.eachDefaultSystem
         (system:
           let
@@ -20,9 +21,6 @@
           in
           {
             packages =
-              let
-                pkgName = "http-status-codes";
-              in
               {
                 website = pkgs.stdenv.mkDerivation
                   {
@@ -81,6 +79,7 @@
       packages = wrapped.packages;
       devShells = wrapped.devShells;
     in
+    rec
     {
       inherit packages devShells;
       /* So other flakes (i.e. website-flake) can create options and configs for this flake */
@@ -92,6 +91,49 @@
           subDomain = "http";
           domain = "${defaults.subDomain}.xvrqt.com";
         };
+      };
+      nixosModules = {
+        default = { lib, pkgs, config, ... }:
+          let
+            # Check if both the website service is enabled, and this specific site is enabled.
+            cfgcheck = config.services.websites.enable && config.services.websites.sites.${pkgName}.enable;
+            # Website url
+            domain = config.services.websites.sites.${pkgName}.domain;
+          in
+          {
+            # Create the option to enable this site, and set its domain name
+            options = {
+              services = {
+                websites = {
+                  sites = {
+                    http-status-codes = {
+                      enable = lib.mkEnableOption "Learn about, and generate HTTP status codes.";
+                      domain = lib.mkOption {
+                        type = lib.types.str;
+                        default = "http.xvrqt.com";
+                        example = "gateway.xvrqt.com";
+                        description = "Domain name for the website. In the form: sub.domain.tld, domain.tld";
+                      };
+                    };
+                  };
+                };
+              };
+            };
+            config = {
+              # Add the website to the system's packages
+              environment.systemPackages = [ packages.${pkgs.system}.website ];
+
+              # Configure a virtual host on nginx
+              services.nginx.virtualHosts.${domain} = lib.mkIf cfgcheck {
+                forceSSL = true;
+                enableACME = true;
+                acmeRoot = null;
+                locations."/" = {
+                  root = "${packages.${pkgs.system}.website}";
+                };
+              };
+            };
+          };
       };
     };
 }
