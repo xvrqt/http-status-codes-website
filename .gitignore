@@ -5,4 +5,4 @@ static-site-generator/target/
 # Don't store the generated website
 static-site-generator/result
 # Don't store any Nix Flake build outputs
-result/
+result
