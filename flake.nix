@@ -166,12 +166,11 @@
                     "/" = {
                       root = "${root}";
                     };
-                    "/404.html" = {
+                    "/100.html" = {
                       root = "${root}";
                     };
-                    "/404" = {
-                      root = "${root}";
-                      return = "404";
+                    "/100" = {
+                      return = "100 https://http.xvrqt.com/100.html";
                     };
                     "/403.html" = {
                       root = "${root}";
@@ -179,6 +178,13 @@
                     "/403" = {
                       root = "${root}";
                       return = "403";
+                    };
+                    "/404.html" = {
+                      root = "${root}";
+                    };
+                    "/404" = {
+                      root = "${root}";
+                      return = "404";
                     };
                   };
                 };
