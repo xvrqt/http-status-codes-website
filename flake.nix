@@ -158,7 +158,7 @@
                   acmeRoot = null;
 
                   extraConfig = ''
-                    error_page 404 /404.html
+                    error_page 404 /404.html;
                   '';
 
                   locations = {
