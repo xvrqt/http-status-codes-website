@@ -170,7 +170,7 @@
                       root = "${root}";
                     };
                     "/100" = {
-                      return = "100 https://http.xvrqt.com/100.html";
+                      return = "100";
                     };
                     "/403.html" = {
                       root = "${root}";
