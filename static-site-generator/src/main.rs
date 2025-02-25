@@ -1,15 +1,15 @@
 use fs_extra::dir;
 use serde::{Deserialize, Serialize};
 use std::convert::From;
+use std::env;
 use std::fs;
+use std::path::{Path, PathBuf};
 use std::vec::Vec;
 use tinytemplate::TinyTemplate;
 
 /* The JSON file full of structured HTTP error code infomation */
 const HTTP_STATUS_CODE_JSON_FILE: &str = "statuses.json";
 const STATUS_TEMPLATE_NAME: &str = "status_page";
-const RESULT_DIR: &str = "result";
-const WEB_DIR: &str = "web";
 
 /* The JSON will provide an array of HTTP status information */
 #[derive(Serialize, Deserialize, Debug)]
@@ -52,22 +52,34 @@ impl From<HttpStatus> for Context {
 }
 
 fn main() {
+    /* Grab where to read the template from and where to place the generated results */
+    let template_path = env::args().nth(1).unwrap_or("web".to_string());
+    let output_path = env::args().nth(2).unwrap_or("results".to_string());
+
+    println!("{:?}", template_path);
+    println!("{:?}", output_path);
+
     /* Open and read the statuses from file */
-    let statuses = fs::read_to_string(HTTP_STATUS_CODE_JSON_FILE).unwrap();
+    // let status_path = format!("./{template_path}/{HTTP_STATUS_CODE_JSON_FILE}");
+    // let status_path = format!("Cargo.toml");
+    let status_path = format!("{HTTP_STATUS_CODE_JSON_FILE}");
+    println!("{}", status_path);
+    let statuses = fs::read_to_string(&status_path).unwrap();
+
     /* Convert to the HttpStatus Code Format */
     let statuses: Vec<HttpStatus> = serde_json::from_str(&statuses).unwrap();
 
     /* Create the directory which will hold the completed website */
-    let _ = fs::remove_dir_all(RESULT_DIR);
-    fs::create_dir_all(RESULT_DIR).unwrap();
+    let _ = fs::remove_dir_all(&output_path);
+    fs::create_dir_all(&output_path).unwrap();
     /* Copy the static resources into the new directory */
     let options = dir::CopyOptions::new();
-    dir::copy(format!("{WEB_DIR}/styles"), RESULT_DIR, &options).unwrap();
-    dir::copy(format!("{WEB_DIR}/fonts"), RESULT_DIR, &options).unwrap();
+    dir::copy(format!("{template_path}/styles"), &output_path, &options).unwrap();
+    dir::copy(format!("{template_path}/fonts"), &output_path, &options).unwrap();
 
     /* Initialize tiny-template */
     let mut tt = TinyTemplate::new();
-    let template = fs::read_to_string(format!("{WEB_DIR}/template.html")).unwrap();
+    let template = fs::read_to_string(format!("{template_path}/template.html")).unwrap();
     tt.add_template(STATUS_TEMPLATE_NAME, &template).unwrap();
 
     /* Create each webpage */
@@ -77,7 +89,7 @@ fn main() {
         let web_page = tt.render(STATUS_TEMPLATE_NAME, &context).unwrap();
         /* Name and place the web page into the final directory */
         let status_code = context.status_code;
-        let filename = format!("{RESULT_DIR}/{status_code}.html");
+        let filename = format!("{output_path}/{status_code}.html");
         fs::File::create(&filename).unwrap();
         fs::write(filename, web_page).unwrap();
     }

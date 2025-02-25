@@ -13,36 +13,60 @@
       wrapped = utils.lib.eachDefaultSystem
         (system:
           let
-            overlays = [ rust.overlays.oxalica rust.overlays.default ];
+            overlays = [ rust.overlays.oxalica rust.overlays.nightly ];
             pkgs = import nixpkgs {
               inherit system overlays;
             };
-
+            # Some insane stuff I have to do to use Rust Nightly, which is
+            # required by Serde
+            mozilla_rust_channel = (pkgs.rustChannelOf {
+              channel = "nightly";
+            }
+            );
+            new_rustc = mozilla_rust_channel.rust;
+            new_cargo = mozilla_rust_channel.cargo;
+            new_fetchCargoTarball = pkgs.rustPlatform.fetchCargoTarball.override {
+              cargo = new_cargo;
+            };
+            nightly_buildRustPackage = pkgs.rustPlatform.buildRustPackage.override {
+              cargo = new_cargo;
+              rustc = new_rustc;
+              fetchCargoTarball = new_fetchCargoTarball;
+            };
           in
           {
-            packages =
-              {
-                website = pkgs.stdenv.mkDerivation
-                  {
-                    name = "website-${pkgName}";
-                    src = ./static-site-generator;
-
-                    buildInputs = [
-                      # To build and run the template engine that regenerates the website
-                      pkgs.rust-toolchain
-                    ];
-
-                    buildPhase = ''
-                      cargo run --release
-                    '';
-
-                    installPhase = ''
-                      cp -r $src $out
-                    '';
-                  };
+            packages = rec
+            {
+              # Generate the HTML from the JSON files
+              generator = nightly_buildRustPackage {
+                pname = "http-status-codes-site-generator";
+                version = "0.1";
+                cargoLock = {
+                  lockFile = ./static-site-generator/Cargo.lock;
+                };
+                src = pkgs.lib.cleanSource ./static-site-generator;
               };
 
-            nixosModules = { };
+              # Store the generated website in the nix-store
+              website = pkgs.stdenv.mkDerivation
+                {
+                  name = "website-${pkgName}";
+                  src = ./static-site-generator;
+                  buildInputs = [
+                    # To build and run the template engine that regenerates the website
+                    # pkgs.rust-nightly-toolchain
+                    generator
+                  ];
+
+                  installPhase = ''
+                    # Run the generator packaged above to generate HTML files from the JSON files
+                    mkdir -p result
+                    ${generator}/bin/http-status-codes-static-site-generator web result
+                    # Copy the resulting files to the nix-store
+                    cp -r result $out
+                  '';
+                };
+            };
 
             devShells = {
               default = pkgs.mkShell {
@@ -50,7 +74,7 @@
                   # To easily serve and test the static webpages
                   pkgs.miniserve
                   # To build and run the template engine that regenerates the website
-                  pkgs.rust-toolchain
+                  pkgs.rust-nightly-toolchain
                 ];
 
                 shellHook = ''
