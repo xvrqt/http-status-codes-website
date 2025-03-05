@@ -56,14 +56,8 @@ fn main() {
     let template_path = env::args().nth(1).unwrap_or("web".to_string());
     let output_path = env::args().nth(2).unwrap_or("result".to_string());
 
-    println!("{:?}", template_path);
-    println!("{:?}", output_path);
-
     /* Open and read the statuses from file */
     let status_path = format!("{template_path}/{HTTP_STATUS_CODE_JSON_FILE}");
-    // let status_path = format!("Cargo.toml");
-    // let status_path = format!("{HTTP_STATUS_CODE_JSON_FILE}");
-    println!("{}", status_path);
     let statuses = fs::read_to_string(&status_path).unwrap();
 
     /* Convert to the HttpStatus Code Format */
@@ -76,6 +70,11 @@ fn main() {
     let options = dir::CopyOptions::new();
     dir::copy(format!("{template_path}/styles"), &output_path, &options).unwrap();
     dir::copy(format!("{template_path}/fonts"), &output_path, &options).unwrap();
+    fs::copy(
+        format! {"{template_path}/index.html"},
+        format!("{output_path}/index.html"),
+    )
+    .unwrap();
 
     /* Initialize tiny-template */
     let mut tt = TinyTemplate::new();
