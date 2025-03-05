@@ -143,20 +143,34 @@
                 };
               };
             };
-            config = {
-              # Add the website to the system's packages
-              environment.systemPackages = [ packages.${pkgs.system}.website ];
+            config =
+              let
+                root = packages."${pkgs.system}".website;
+              in
+              {
+                # Add the website to the system's packages
+                environment.systemPackages = [ packages.${pkgs.system}.website ];
 
-              # Configure a virtual host on nginx
-              services.nginx.virtualHosts.${domain} = lib.mkIf cfgcheck {
-                forceSSL = true;
-                enableACME = true;
-                acmeRoot = null;
-                locations."/" = {
-                  root = "${packages.${pkgs.system}.website}";
+                # Configure a virtual host on nginx
+                services.nginx.virtualHosts.${domain} = lib.mkIf cfgcheck {
+                  forceSSL = true;
+                  enableACME = true;
+                  acmeRoot = null;
+
+                  errorPages = {
+                    "404" = "/404.html";
+                  };
+
+                  locations = {
+                    "/" = {
+                      root = "${root}";
+                    };
+                    "/404" = {
+                      return = "404";
+                    };
+                  };
                 };
               };
-            };
           };
       };
     };
