@@ -617,7 +617,7 @@ h2 {
     letter-spacing: 0.5em;
   }
 
-  .links .link:not(:last-child) .glowing-btn::before {
+  .glowing-btn::before {
     display: none;
   }
 }
