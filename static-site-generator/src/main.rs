@@ -3,7 +3,6 @@ use serde::{Deserialize, Serialize};
 use std::convert::From;
 use std::env;
 use std::fs;
-// use std::path::{Path, PathBuf};
 use std::vec::Vec;
 use tinytemplate::TinyTemplate;
 
@@ -98,6 +97,7 @@ fn main() {
     let options = dir::CopyOptions::new();
     dir::copy(format!("{template_path}/styles"), &output_path, &options).unwrap();
     dir::copy(format!("{template_path}/fonts"), &output_path, &options).unwrap();
+    dir::copy(format!("{template_path}/icons"), &output_path, &options).unwrap();
 
     /* Initialize tiny-template */
     let mut tt = TinyTemplate::new();
