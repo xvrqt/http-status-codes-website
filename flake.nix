@@ -186,7 +186,8 @@
                     "/" = {
                       root = "${root}";
                       extraConfig = ''
-                        try_files $uri $uri.html
+                        index index.html;
+                        try_files $uri $uri.html;
                       '';
                     };
 
