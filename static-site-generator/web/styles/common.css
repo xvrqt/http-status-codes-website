@@ -617,14 +617,7 @@ h2 {
     letter-spacing: 0.5em;
   }
 
-  #links .link:not(:last-child) .glowing-btn::before {
+  .links .link:not(:last-child) .glowing-btn::before {
     display: none;
-  }
-}
-
-@media screen and (max-width: 580px) {
-  .wrapper {
-    font-size: 16px;
-    line-height: 22px;
   }
 }
