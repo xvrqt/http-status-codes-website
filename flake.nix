@@ -270,6 +270,90 @@
                       root = "${root}";
                       return = "409";
                     };
+                    "/410.html" = {
+                      root = "${root}";
+                    };
+                    "/410" = {
+                      root = "${root}";
+                      return = "410";
+                    };
+                    "/411.html" = {
+                      root = "${root}";
+                    };
+                    "/411" = {
+                      root = "${root}";
+                      return = "411";
+                    };
+                    "/412.html" = {
+                      root = "${root}";
+                    };
+                    "/412" = {
+                      root = "${root}";
+                      return = "412";
+                    };
+                    "/413.html" = {
+                      root = "${root}";
+                    };
+                    "/413" = {
+                      root = "${root}";
+                      return = "413";
+                    };
+                    "/414.html" = {
+                      root = "${root}";
+                    };
+                    "/414" = {
+                      root = "${root}";
+                      return = "414";
+                    };
+                    "/415.html" = {
+                      root = "${root}";
+                    };
+                    "/415" = {
+                      root = "${root}";
+                      return = "415";
+                    };
+                    "/416.html" = {
+                      root = "${root}";
+                    };
+                    "/416" = {
+                      root = "${root}";
+                      return = "416";
+                    };
+                    "/417.html" = {
+                      root = "${root}";
+                    };
+                    "/417" = {
+                      root = "${root}";
+                      return = "417";
+                    };
+                    "/418.html" = {
+                      root = "${root}";
+                    };
+                    "/418" = {
+                      root = "${root}";
+                      return = "418";
+                    };
+                    "/421.html" = {
+                      root = "${root}";
+                    };
+                    "/421" = {
+                      root = "${root}";
+                      return = "421";
+                    };
+                    "/422.html" = {
+                      root = "${root}";
+                    };
+                    "/422" = {
+                      root = "${root}";
+                      return = "422";
+                    };
+                    "/426.html" = {
+                      root = "${root}";
+                    };
+                    "/426" = {
+                      root = "${root}";
+                      return = "426";
+                    };
                   };
                 };
               };
