@@ -151,7 +151,7 @@ body {
   background-size: 1px 0.5em;
   box-shadow: 0 0 1em rgba(89, 193, 254, 0.4);
 
-  animation: var(--lines-duration) linear var(--lines-start) line-slide-in;
+  animation: var(--lines-duration) linear var(--lines-start) both line-slide-in;
 }
 
 /* Slides the lines in from the left, with an angle at the leading edge */
