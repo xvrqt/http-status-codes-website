@@ -1,0 +1,52 @@
+/* The headers to each status code section, e.g. 1XX */
+h3 {
+  width: var(--column-width);
+  margin: 15px auto 0px auto;
+
+  position: relative;
+  background: none;
+
+  color: var(--blue);
+  font-family: info;
+  font-size: 1.8em;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+
+  perspective: 2em;
+
+  -webkit-box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  -moz-box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  box-shadow:
+    inset 0px 0px 0.5em 0px inherit,
+    0px 0px 0.5em 0px inherit;
+  animation: border-flicker 4s linear infinite;
+}
+
+/* Class which disables the perspective glow on the buttons */
+.no-glow.glowing-btn::before {
+  content: "";
+  display: none;
+}
+
+/* On the index page, adjust some settings */
+.links.index {
+  justify-content: flex-start;
+}
+.index .link {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* On the index page, adjust some settings */
+.links.index {
+  justify-content: flex-start;
+}
+
+.index .link {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}

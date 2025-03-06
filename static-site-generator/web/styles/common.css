@@ -1,7 +1,28 @@
+/* This document contains the styles common to all pages */
+/* Notably the fancy header that animates in, the fonts, the variables, and the fancy background */
+
 /* Vars */
 :root {
   --blue: hsl(160, 100%, 65%);
   --pink: hsl(310, 100%, 65%);
+
+  --column-width: min(90vw, 335px);
+
+  --header-start: 0s;
+  --header-duration: 0.75s;
+  --lines-start: calc(var(--header-start) + 0.35s);
+  --lines-duration: 0.25s;
+  --highlight-start: var(--header-duration);
+  --highlight-duration: 1.5s;
+  --reason-start: calc(var(--header-duration) + 0.25s);
+  --reason-duration: 0.5s;
+
+  --description-start: calc(var(--header-duration) + 0.35s);
+  --description-duration: 0.25s;
+  --links-start: calc(
+    var(--description-start) + var(--description-duration) + 0.1s
+  );
+  --links-duration: 0.25s;
 }
 
 /* Helper class to easily apply a simple fade in animation */
@@ -24,7 +45,7 @@
 /* Load Custom Font Faces */
 /* The Blocky Error Codes - e.g. 404 */
 @font-face {
-  font-family: "error-code";
+  font-family: "status-code";
   font-weight: 900;
   src: url(/fonts/code.ttf);
 }
@@ -32,7 +53,7 @@
 /* The sub-code script with its title */
 /* e.g. "Not Found" */
 @font-face {
-  font-family: "error-script";
+  font-family: "status-script";
   src: url(/fonts/script.ttf);
 }
 
@@ -58,7 +79,8 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  background: radial-gradient(rgba(118, 0, 191, 0.5) 0%, transparent 70%),
+  background:
+    radial-gradient(rgba(118, 0, 191, 0.5) 0%, transparent 70%),
     linear-gradient(#0b161e 40%, #202076 70%);
 
   perspective: 700px;
@@ -71,7 +93,8 @@ body {
   animation: 4s linear infinite both grid-scan;
 
   /* Create a neon bordered square, which will be repeated */
-  background: linear-gradient(
+  background:
+    linear-gradient(
       transparent 65%,
       rgba(46, 38, 255, 0.4) 75%,
       rgb(125, 65, 230) 80%,
@@ -93,6 +116,7 @@ body {
   height: 300vh;
   bottom: -120vh;
   position: absolute;
+  z-index: -1;
   transform: rotateX(-100deg);
 
   /* Mask the image so it appears to fade into the distance */
@@ -127,7 +151,7 @@ body {
   background-size: 1px 0.5em;
   box-shadow: 0 0 1em rgba(89, 193, 254, 0.4);
 
-  animation: 0.25s linear 0.35s line-slide-in;
+  animation: var(--lines-duration) linear var(--lines-start) line-slide-in;
 }
 
 /* Slides the lines in from the left, with an angle at the leading edge */
@@ -143,13 +167,13 @@ body {
 /* The giant blocky error code */
 h1 {
   font-size: 9em;
-  font-family: "error-code";
+  font-family: "status-code";
   letter-spacing: 0.03em;
 
   margin: 0;
   position: relative;
   transform: skew(-15deg);
-  animation: error-code-slide 0.75s;
+  animation: var(--header-duration) linear var(--header-start) status-code-slide;
 }
 
 /* Shadow */
@@ -182,7 +206,7 @@ h1 span:last-child {
   -webkit-text-stroke: 0.01em #94a0b9;
 }
 /* Slides in from the right, over shoots, and bounces back into the center */
-@keyframes error-code-slide {
+@keyframes status-code-slide {
   0% {
     transform: translateX(200vw) skew(0deg);
   }
@@ -203,7 +227,8 @@ h1::after {
   height: 0.4em;
   float: right;
   position: relative;
-  animation: 1.5s ease-in-out 0.75s both specular-shine;
+  animation: var(--highlight-duration) ease-in-out var(--highlight-start) both
+    specular-shine;
 
   background:
     radial-gradient(
@@ -248,14 +273,14 @@ h2 {
 
   color: white;
   font-size: 3.5em;
-  font-family: "error-script";
+  font-family: "status-script";
 
   /* Fades in after a second */
-  animation: 0.5s linear 1s both fade-in;
+  animation: var(--reason-duration) linear var(--reason-start) both fade-in;
 }
 /* The words themselves - pulsate with a subtle neon glow */
-#error-reason {
-  animation: 0.5s ease-in-out infinite both alternate error-reason;
+#status-reason {
+  animation: 0.5s ease-in-out infinite both alternatestatus-reason;
 
   text-shadow:
     0 0 0.05em #fff,
@@ -263,7 +288,7 @@ h2 {
     0 0 0.3em #fe05e1;
 }
 /* Alternate between 'glowing' at slightly larger/smaller radius */
-@keyframes error-reason {
+@keyframesstatus-reason {
   0% {
     text-shadow:
       0 0 0.05em #fff,
@@ -277,16 +302,16 @@ h2 {
       0 0 0.25em #fe05e1;
   }
 }
-
-/* RFC Description */
+/* For paragraphs of text */
 /* Gradient borders match the text, background is slightly dimmer */
-#description {
+.description {
   width: min(90vw, 335px);
   padding: 0 1rem 0.5rem 1rem;
   margin-top: 1rem;
 
-  /* Fade in after the error reason */
-  animation: 0.25s linear 1.1s both fade-in;
+  /* Fade in after header */
+  animation: var(--description-duration) linear var(--description-start) both
+    fade-in;
 
   /* Matching left/right border gradients for the text */
   border-width: 1px;
@@ -310,10 +335,15 @@ h2 {
   );
 }
 
-#description p {
+/* Allows the font inside to have a gradient, and different animation timing */
+.description p {
   font-size: 0.8rem;
   font-family: info;
   text-align: justify;
+
+  /* Fade in just after the background container does */
+  animation: var(--description-duration) linear
+    calc(var(--description-duration + 0.05s)) both fade-in;
 
   /* Blue to pink text */
   background-clip: text;
@@ -324,37 +354,26 @@ h2 {
     hsl(310, 100%, 65%),
     hsl(160, 100%, 65%)
   );
-  /* Fade in just after the background container does */
-  animation: 0.25s linear 1.15s both fade-in;
 }
 
-/* Container for the link buttons at the bottom */
-#links {
+/* Container for the glowing link buttons */
+.links {
   width: min(90vw, 335px);
+
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
 
+  flex-wrap: wrap;
   font-size: 0.8rem;
-  font-family: info;
   text-align: center;
+  font-family: info;
 }
 
-/* Individual buttons fade-in */
+/* Individual buttons */
 .link {
-  animation: 0.5s linear 0s both fade-in;
-}
-
-/* Fade in at different times, one after another */
-#spec {
-  animation-delay: 1.25s;
-}
-#source {
-  animation-delay: 1.35s;
-}
-#support {
-  animation-delay: 1.45s;
+  animation: var(--links-duration) linear var(--links-start) both fade-in;
 }
 
 /* Style the actual buttons themselves */
@@ -362,7 +381,7 @@ h2 {
   cursor: pointer;
 
   color: rgba(0, 0, 0, 0.8);
-  font-family: error-code;
+  font-family: status-code;
   font-size: 0.8em;
   font-weight: 900;
   text-shadow: none;
@@ -377,7 +396,7 @@ h2 {
   animation: none;
 }
 
-/* Add a glow infront of it, on the same plane as the grid - giving the illusion it is emissive */
+/* Add a glow in front of it, on the same plane as the grid - giving the illusion it is emissive */
 .glowing-btn::before {
   content: "";
   top: 0;
@@ -430,7 +449,7 @@ h2 {
   background: none;
 
   color: var(--blue);
-  font-family: error-code;
+  font-family: status-code;
   font-size: 0.8em;
   font-weight: 900;
   letter-spacing: 0.5em;
@@ -580,7 +599,7 @@ h2 {
 /* Tiny Screen Adjustments */
 @media only screen and (max-width: 600px) {
   /* Make the links stack vertically instead of horizontally */
-  #links {
+  .links {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -600,5 +619,12 @@ h2 {
 
   #links .link:not(:last-child) .glowing-btn::before {
     display: none;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .wrapper {
+    font-size: 16px;
+    line-height: 22px;
   }
 }
