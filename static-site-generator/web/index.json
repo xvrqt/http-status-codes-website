@@ -1,0 +1,35 @@
+[
+  {
+    "title": "100",
+    "description": "The informational class of status code indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response.",
+    "link": "https://datatracker.ietf.org/doc/html/rfc9110#status.1xx",
+    "codes": [100, 101]
+  },
+  {
+    "title": "200",
+    "description": "The successful class of status code indicates that the client's request was successfully received, understood, and accepted.",
+    "link": "https://datatracker.ietf.org/doc/html/rfc9110#status.2xx",
+    "codes": [200, 201, 202, 203, 204, 205, 206]
+  },
+  {
+    "title": "300",
+    "description": "The redirection class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request.",
+    "link": "https://datatracker.ietf.org/doc/html/rfc9110#status.3xx",
+    "codes": [300, 301, 301, 303, 304, 305, 306, 307, 308]
+  },
+  {
+    "title": "400",
+    "description": "The client error class of status code indicates that the client seems to have erred.",
+    "link": "https://datatracker.ietf.org/doc/html/rfc9110#status.4xx",
+    "codes": [
+      400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414,
+      415, 416, 417, 418, 421, 422, 426
+    ]
+  },
+  {
+    "title": "500",
+    "description": "The server error class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method.",
+    "link": "https://datatracker.ietf.org/doc/html/rfc9110#status.5xx",
+    "codes": [500, 501, 502, 503, 504, 505]
+  }
+]

@@ -13,7 +13,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="theme-color" content="#111" />
+    <meta name="theme-color" content="#0B161E" />
 
     <!-- Icons -->
     <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
@@ -39,7 +39,8 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Our single style sheet -->
-    <link rel="stylesheet" href="/styles/error.css" />
+    <link rel="stylesheet" href="/styles/common.css" />
+    <link rel="stylesheet" href="/styles/codes.css" />
   </head>
 
   <body>
@@ -49,13 +50,13 @@
       <span>{ status_code }</span>
       <span>{ status_code }</span>
     </h1>
-    <h2><span id="error-reason">{ status_reason }</span></h2>
-    <div id="description">
+    <h2><span id="status-reason">{ status_reason }</span></h2>
+    <div class="description">
       <p>
         { status_description }
       </p>
     </div>
-    <div id="links">
+    <div class="links">
       <div id="spec" class="link">
         <a href="{ status_spec_link }">
         <button class="glowing-btn">
@@ -66,7 +67,7 @@
         </a>
       </div>
       <div id="source" class="link">
-        <a href="xvrqt.com">
+        <a href="https://github.com/xvrqt/http-status-codes-website">
           <button
             class="glowing-btn"
             style="

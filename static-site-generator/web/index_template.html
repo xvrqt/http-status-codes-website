@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Title and Description -->
+    <title>HTTP Status Codes</title>
+    <meta
+      name="description"
+      content="A list of HTTP status codes. The error codes also provide the selfsame HTTP error code on their respective pages."
+    />
+    <meta name="author" content="crow" />
+
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#0B161E" />
+
+    <!-- Icons -->
+    <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="/icons/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+  </head>
+
+  <body>
+    <div id="grid"></div>
+    <div id="lines"></div>
+    <h1>
+      <span>HTTP</span>
+      <span>HTTP</span>
+    </h1>
+    <h2><span id="status-reason">Status Codes</span></h2>
+    <div id="wrapper">
+      {{ for group in groups }}
+      <div class="description">
+        <h3>~ { group.title } ~</h3>
+        <p>{ group.description }</p>
+        <div class="links">
+          {{ for code in group.codes }}
+          <div class="link">
+            <a href="/{code}">
+              <button
+                class="no-glow glowing-btn"
+                style="animation-delay: 0.25s; animation-duration: 3.5s"
+              >
+                <span class="glowing-txt"
+                  >[<span class="faulty-letter" style="animation-delay: 0.65"
+                    >{code}</span
+                  >]</span
+                >
+              </button>
+            </a>
+          </div>
+          {{ endfor }}
+          <div class="link">
+            <a href="{group.link}">
+              <button
+                class="no-glow glowing-btn"
+                style="animation-delay: calc(var(--links-start) + 1s)"
+              >
+                <span
+                  class="glowing-txt"
+                  style="animation-delay: 0.35s; animation-direction: reverse"
+                  >&lt;<span
+                    class="faulty-letter"
+                    style="animation-delay: calc(var(--links-start) + 1s)"
+                    >/</span
+                  >&gt;</span
+                >
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      {{ endfor }}
+    </div>
+  </body>
+</html>

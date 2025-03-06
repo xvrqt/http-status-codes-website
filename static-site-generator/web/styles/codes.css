@@ -1,0 +1,11 @@
+/* Fade in the glowing buttons, one after another */
+/* --links-start is defined in common.css */
+#spec {
+  animation-delay: calc(var(--links-start));
+}
+#source {
+  animation-delay: calc(var(--links-start) + 0.1s);
+}
+#support {
+  animation-delay: calc(var(--links-start) + 0.2s);
+}
