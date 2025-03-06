@@ -158,26 +158,62 @@
                   acmeRoot = null;
 
                   extraConfig = ''
-                    error_page 404 /404.html;
+                    error_page 400 /400.html;
+                    error_page 401 /401.html;
+                    error_page 402 /402.html;
                     error_page 403 /403.html;
+                    error_page 404 /404.html;
+                    error_page 405 /405.html;
+                    error_page 406 /406.html;
+                    error_page 407 /407.html;
+                    error_page 408 /408.html;
+                    error_page 409 /409.html;
+                    error_page 410 /410.html;
+                    error_page 411 /411.html;
+                    error_page 412 /412.html;
+                    error_page 413 /413.html;
+                    error_page 414 /414.html;
+                    error_page 415 /415.html;
+                    error_page 416 /416.html;
+                    error_page 417 /417.html;
+                    error_page 418 /418.html;
+                    error_page 421 /421.html;
+                    error_page 422 /422.html;
+                    error_page 426 /426.html;
                   '';
 
                   locations = {
                     "/" = {
                       root = "${root}";
+                      extraConfig = ''
+                        try_files $uri $uri.html
+                      '';
                     };
-                    "/100.html" = {
+
+                    "/400.html" = {
                       root = "${root}";
                     };
-                    "/100" = {
-                      return = "100";
+                    "/400" = {
+                      root = "${root}";
+                      return = "400";
                     };
-                    "/101.html" = {
+
+                    "/401.html" = {
                       root = "${root}";
                     };
-                    "/101" = {
-                      return = "101";
+                    "/401" = {
+                      root = "${root}";
+                      return = "401";
                     };
+
+                    "/402.html" = {
+                      root = "${root}";
+                    };
+                    "/402" = {
+                      root = "${root}";
+                      return = "402";
+                    };
+
                     "/403.html" = {
                       root = "${root}";
                     };
@@ -185,12 +221,53 @@
                       root = "${root}";
                       return = "403";
                     };
+
                     "/404.html" = {
                       root = "${root}";
                     };
                     "/404" = {
                       root = "${root}";
                       return = "404";
+                    };
+
+                    "/405.html" = {
+                      root = "${root}";
+                    };
+                    "/405" = {
+                      root = "${root}";
+                      return = "405";
+                    };
+
+                    "/406.html" = {
+                      root = "${root}";
+                    };
+                    "/406" = {
+                      root = "${root}";
+                      return = "406";
+                    };
+
+                    "/407.html" = {
+                      root = "${root}";
+                    };
+                    "/407" = {
+                      root = "${root}";
+                      return = "407";
+                    };
+
+                    "/408.html" = {
+                      root = "${root}";
+                    };
+                    "/408" = {
+                      root = "${root}";
+                      return = "408";
+                    };
+
+                    "/409.html" = {
+                      root = "${root}";
+                    };
+                    "/409" = {
+                      root = "${root}";
+                      return = "409";
                     };
                   };
                 };
