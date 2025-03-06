@@ -180,6 +180,13 @@
                     error_page 421 /421.html;
                     error_page 422 /422.html;
                     error_page 426 /426.html;
+
+                    error_page 500 /500.html;
+                    error_page 501 /501.html;
+                    error_page 502 /502.html;
+                    error_page 503 /503.html;
+                    error_page 504 /504.html;
+                    error_page 505 /505.html;
                   '';
 
                   locations = {
@@ -255,13 +262,13 @@
                       return = "407";
                     };
 
-                    "/408.html" = {
-                      root = "${root}";
-                    };
-                    "/408" = {
-                      root = "${root}";
-                      return = "408";
-                    };
+                    # "/408.html" = {
+                    #   root = "${root}";
+                    # };
+                    # "/408" = {
+                    #   root = "${root}";
+                    #   return = "408";
+                    # };
 
                     "/409.html" = {
                       root = "${root}";
@@ -353,6 +360,48 @@
                     "/426" = {
                       root = "${root}";
                       return = "426";
+                    };
+                    "/500.html" = {
+                      root = "${root}";
+                    };
+                    "/500" = {
+                      root = "${root}";
+                      return = "500";
+                    };
+                    "/501.html" = {
+                      root = "${root}";
+                    };
+                    "/501" = {
+                      root = "${root}";
+                      return = "501";
+                    };
+                    "/502.html" = {
+                      root = "${root}";
+                    };
+                    "/502" = {
+                      root = "${root}";
+                      return = "502";
+                    };
+                    "/503.html" = {
+                      root = "${root}";
+                    };
+                    "/503" = {
+                      root = "${root}";
+                      return = "503";
+                    };
+                    "/504.html" = {
+                      root = "${root}";
+                    };
+                    "/504" = {
+                      root = "${root}";
+                      return = "504";
+                    };
+                    "/505.html" = {
+                      root = "${root}";
+                    };
+                    "/505" = {
+                      root = "${root}";
+                      return = "505";
                     };
                   };
                 };
