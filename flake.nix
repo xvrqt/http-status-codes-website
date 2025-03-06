@@ -194,7 +194,7 @@
                       root = "${root}";
                       extraConfig = ''
                         index index.html;
-                        try_files $uri $uri.html;
+                        try_files $uri $uri.html /index.html =404;
                       '';
                     };
 
