@@ -1,3 +1,14 @@
+/* Wraps the entire section to allow scrolling */
+#wrapper {
+  margin-top: 25px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 /* The headers to each status code section, e.g. 1XX */
 h3 {
   width: var(--column-width);
@@ -7,8 +18,9 @@ h3 {
   background: none;
 
   color: var(--blue);
-  font-family: info;
+  text-align: center;
   font-size: 1.8em;
+  font-family: info;
   font-weight: 900;
   letter-spacing: 0.15em;
 
@@ -23,30 +35,24 @@ h3 {
   box-shadow:
     inset 0px 0px 0.5em 0px inherit,
     0px 0px 0.5em 0px inherit;
-  animation: border-flicker 4s linear infinite;
+  /* animation: border-flicker 4s linear infinite; */
 }
 
+/* On the index page, adjust how the links to the status code pages are laid out, since they are likely to wrap */
+.links.index {
+  justify-content: space-evenly;
+}
+.index .link {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+/* Don't wrap the text */
+.glowing-btn {
+  margin: 5px 5px;
+  text-wrap: nowrap;
+}
 /* Class which disables the perspective glow on the buttons */
 .no-glow.glowing-btn::before {
   content: "";
   display: none;
-}
-
-/* On the index page, adjust some settings */
-.links.index {
-  justify-content: flex-start;
-}
-.index .link {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-/* On the index page, adjust some settings */
-.links.index {
-  justify-content: flex-start;
-}
-
-.index .link {
-  margin-right: 10px;
-  margin-bottom: 10px;
 }

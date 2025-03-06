@@ -16,7 +16,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="theme-color" content="#111" />
+    <meta name="theme-color" content="#0B161E" />
 
     <!-- Icons -->
     <link rel="icon" href="/icons/favicon.ico" type="image/x-icon" />
@@ -54,47 +54,49 @@
       <span>HTTP</span>
     </h1>
     <h2><span id="status-reason">Status Codes</span></h2>
-    {{ for group in groups }}
-    <div class="description one">
-      <h3 class="one">{ group.title }</h3>
-      <p>{ group.description }</p>
-      <div class="links">
-        {{ for code in group.codes }}
-        <div class="link">
-          <a href="/{code}">
-            <button
-              class="no-glow glowing-btn"
-              style="animation-delay: 0.25s; animation-duration: 3.5s"
-            >
-              <span
-                class="glowing-txt"
-                style="animation-delay: 0.35s; animation-direction: reverse"
-                >[<span class="faulty-letter" style="animation-delay: 0.65"
-                  >{code}</span
-                >]</span
+    <div id="wrapper">
+      {{ for group in groups }}
+      <div class="description">
+        <h3>~ { group.title } ~</h3>
+        <p>{ group.description }</p>
+        <div class="links">
+          {{ for code in group.codes }}
+          <div class="link">
+            <a href="/{code}">
+              <button
+                class="no-glow glowing-btn"
+                style="animation-delay: 0.25s; animation-duration: 3.5s"
               >
-            </button>
-          </a>
-        </div>
-        {{ endfor }}
-        <div class="link">
-          <a href="{group.link}">
-            <button
-              class="no-glow glowing-btn"
-              style="animation-delay: 0.25s; animation-duration: 3.5s"
-            >
-              <span
-                class="glowing-txt"
-                style="animation-delay: 0.35s; animation-direction: reverse"
-                >&lt;<span class="faulty-letter" style="animation-delay: 0.65"
-                  >/</span
-                >&gt;</span
+                <span class="glowing-txt"
+                  >[<span class="faulty-letter" style="animation-delay: 0.65"
+                    >{code}</span
+                  >]</span
+                >
+              </button>
+            </a>
+          </div>
+          {{ endfor }}
+          <div class="link">
+            <a href="{group.link}">
+              <button
+                class="no-glow glowing-btn"
+                style="animation-delay: calc(var(--links-start) + 1s)"
               >
-            </button>
-          </a>
+                <span
+                  class="glowing-txt"
+                  style="animation-delay: 0.35s; animation-direction: reverse"
+                  >&lt;<span
+                    class="faulty-letter"
+                    style="animation-delay: calc(var(--links-start) + 1s)"
+                    >/</span
+                  >&gt;</span
+                >
+              </button>
+            </a>
+          </div>
         </div>
       </div>
+      {{ endfor }}
     </div>
-    {{ endfor }}
   </body>
 </html>
