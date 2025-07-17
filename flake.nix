@@ -31,7 +31,7 @@
             nightly_buildRustPackage = pkgs.rustPlatform.buildRustPackage.override {
               cargo = new_cargo;
               rustc = new_rustc;
-              fetchCargoTarball = new_fetchCargoTarball;
+              # fetchCargoTarball = new_fetchCargoTarball;
             };
           in
           {
